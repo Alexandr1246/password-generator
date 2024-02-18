@@ -1,0 +1,39 @@
+#!/bin/bash
+
+echo "Hi, I'm a password generator. Select the options you need"
+
+sym="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-="
+sym2="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+
+echo "Enter password length, max 16"
+
+read length
+
+echo "Pass length is $length"
+
+if ! [[ $length =~ ^[0-9]+$ ]] && [ "$length" -gt 16 ]; 
+	then
+	echo "You entered the wrong data, maximum value will be set"
+	length=16
+fi
+
+
+
+echo "1 - letters and numbers"
+echo "2 - letters, numbers and symbols"
+
+read diff
+case $diff in
+
+1)
+	pass=$(head /dev/urandom | tr -dc "$sym2" | head -c "$length") 
+	echo "pass varian $length";;
+2)
+	pass=$(head /dev/urandom | tr -dc "$sym" | head -c "$length")
+	echo "pass varian 2";;
+*)
+	echo "incorrect data entry";;
+esac
+
+echo "Your password: $pass"
+
